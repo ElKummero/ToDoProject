@@ -67,6 +67,33 @@ const actions = {
     this.$router.push('/')
     // Cache la fenêtre de chargement
     Loading.hide()
+  },
+  deconnecterUtilisateur ({ commit, state }) {
+    Loading.show()
+    const that = this
+    // Configuration du header avec token
+    const config = {
+      headers: { Authorization: 'Bearer ' + state.token }
+    }
+    // Déconnexion de l'API
+    api.post('/logout', {}, config)
+      .catch(function (error) {
+        afficherMessageErreur(
+          'Erreur lors de la déconnexion'
+        )
+        throw error
+      })
+      .finally(function () {
+        // Réinitialise user et token
+        commit('setUser', null)
+        commit('setToken', null)
+        // Vide le locaStorage
+        LocalStorage.clear()
+        // Redirige l'utilisateur vers la page de connexion
+        that.$router.push('/connexion')
+        // location.reload() // recharge la page du navigateur
+        Loading.hide()
+      })
   }
 }
 
@@ -75,9 +102,7 @@ Getters : retourne les données du magasin
 Fonctionne comme les propriétés calculées
 Sert à calculer, trier, filtrer ou formater les donneés
  */
-const getters = {
-
-}
+const getters = {}
 
 /*
 Exporte les constantes, variables du fichier
