@@ -1,5 +1,5 @@
 import { api } from 'boot/axios'
-import { afficherMessageErreur } from '../fonctions/message-erreur'
+import { afficherMessageErreur } from 'src/fonctions/message-erreur'
 import { Loading, LocalStorage } from 'quasar'
 
 // State : données du magasin
@@ -63,12 +63,14 @@ const actions = {
     // Sauvegarde les données de l'utilisateur dans le localStorage
     LocalStorage.set('user', state.user)
     LocalStorage.set('token', state.token)
+    // Récupération des tâches de l'utilisateur
+    dispatch('taches/getTachesApi', null, { root: true })
     // Redirige l'utilisateur vers la page des tâches
     this.$router.push('/')
     // Cache la fenêtre de chargement
     Loading.hide()
   },
-  deconnecterUtilisateur ({ commit, state }) {
+  deconnecterUtilisateur ({ commit, state, dispatch }) {
     Loading.show()
     const that = this
     // Configuration du header avec token
@@ -89,6 +91,8 @@ const actions = {
         commit('setToken', null)
         // Vide le locaStorage
         LocalStorage.clear()
+        // Vide la liste des tâches
+        dispatch('taches/viderTaches', null, { root: true })
         // Redirige l'utilisateur vers la page de connexion
         that.$router.push('/connexion')
         // location.reload() // recharge la page du navigateur
@@ -102,7 +106,9 @@ Getters : retourne les données du magasin
 Fonctionne comme les propriétés calculées
 Sert à calculer, trier, filtrer ou formater les donneés
  */
-const getters = {}
+const getters = {
+
+}
 
 /*
 Exporte les constantes, variables du fichier

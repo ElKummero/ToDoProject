@@ -1,29 +1,10 @@
+import { api } from 'boot/axios'
+import { afficherMessageErreur } from 'src/fonctions/message-erreur'
+
 // State : données du magasin
 const state = {
-  taches: [/*
-    {
-      id: 1,
-      nom: 'Acheter des oranges',
-      terminee: false,
-      dateFin: '06.06.2020',
-      heureFin: '12:00'
-    },
-    {
-      id: 2,
-      nom: 'Manger des oranges',
-      terminee: false,
-      dateFin: '15.06.2020',
-      heureFin: '22:00'
-    },
-    {
-      id: 3,
-      nom: 'Digérer des oranges',
-      terminee: false,
-      dateFin: '16.06.2020',
-      heureFin: '14:00'
-    }
-    */
-  ]
+  taches: [],
+  tachesChargees: false
 }
 
 /*
@@ -49,6 +30,12 @@ const mutations = {
   ajouterTache (state, tache) {
     // Ajout de la tâche à fin du tableau
     state.taches.push(tache)
+  },
+  setTaches (state, taches) {
+    state.taches = taches
+  },
+  setTachesChargees (state, valeur) {
+    state.tachesChargees = valeur
   }
 }
 /*
@@ -61,7 +48,6 @@ const actions = {
     commit('modifierTache', payload)
   },
   supprimerTache ({ commit }, id) {
-    console.log('action supprimerTache')
     commit('supprimerTache', id)
   },
   ajouterTache ({ commit }, tache) {
@@ -75,6 +61,27 @@ const actions = {
     tache.id = uId
     // Commite l'ajout
     commit('ajouterTache', tache)
+  },
+  getTachesApi ({ commit, rootState }) {
+    commit('setTachesChargees', false)
+    const config = {
+      headers: { Authorization: 'Bearer ' + rootState.auth.token }
+    }
+    api.get('/taches', config)
+      .then(function (response) {
+        commit('setTaches', response.data)
+        commit('setTachesChargees', true)
+      })
+      .catch(function (error) {
+        afficherMessageErreur(
+          'Erreur lors de la récupération des tâches !'
+        )
+        throw error
+      })
+  },
+  viderTaches ({ commit }) {
+    commit('setTaches', [])
+    commit('setTachesChargees', false)
   }
 }
 

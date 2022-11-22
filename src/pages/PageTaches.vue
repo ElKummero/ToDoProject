@@ -1,8 +1,17 @@
 <template>
   <q-page padding>
+    <!-- Spinner -->
+    <div
+      v-if="!tachesChargees"
+      class="q-pa-lg text-center"
+    >
+      <q-spinner-radio color="primary" size="4em" />
+    </div>
+    <!-- Liste des tâches -->
     <q-list
-      v-if="taches.length"
+      v-if="taches.length && tachesChargees"
       separator
+      bordered:false
     >
       <tache
         v-for="tache in taches"
@@ -35,7 +44,7 @@
 
 <script>
 // importation des fonctions utilitaires
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'PageTaches',
@@ -46,7 +55,8 @@ export default {
   },
   computed: {
     // Mappage des getters ('nomNamespace', ['nomGetter'])
-    ...mapGetters('taches', ['taches'])
+    ...mapGetters('taches', ['taches']),
+    ...mapState('taches', ['tachesChargees'])
   },
   components: {
     tache: require('components/Taches/Tache').default,

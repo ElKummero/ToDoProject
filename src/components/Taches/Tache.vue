@@ -4,7 +4,7 @@
       {
         id: tache.id,
         updates: {
-          terminee: !tache.terminee
+          terminee: tache.terminee === 0 ? 1 : 0
         }
       }
     )"
@@ -15,7 +15,7 @@
   >
     <q-item-section side>
       <q-checkbox
-        :value="tache.terminee"
+        :value="!!tache.terminee"
         class="no-pointer-events visible"
       />
     </q-item-section>
