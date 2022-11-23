@@ -32,6 +32,7 @@
             <q-item-label>Tâche</q-item-label>
           </q-item-section>
         </q-item>
+
         <q-item clickable to="/params" exact>
           <q-item-section avatar>
             <q-icon name="settings" />
@@ -39,6 +40,19 @@
 
           <q-item-section>
             <q-item-label>Paramètres</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable to="/connexion" exact>
+          <q-item-section avatar>
+            <q-icon name="account_circle" />
+          </q-item-section>
+
+          <q-item-section v-if="!user">
+            <q-item-label>Se connecter</q-item-label>
+          </q-item-section>
+          <q-item-section v-else @click="deconnecterUtilisateur">
+            <q-item-label>Se déconnecter</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>

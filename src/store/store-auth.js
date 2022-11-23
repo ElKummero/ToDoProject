@@ -35,7 +35,7 @@ const actions = {
       .catch(function (error) {
         Loading.hide()
         afficherMessageErreur(
-          'Création du compte impossible !',
+          'Erreur lors de la création de votre compte. Veuillez rééssayer',
           Object.values(error.response.data)
         )
         throw error
@@ -50,7 +50,7 @@ const actions = {
       .catch(function (error) {
         Loading.hide()
         afficherMessageErreur(
-          'Connexion impossible !',
+          'Erreur de connexion. Veuillez vérifier vos identifiants.',
           Object.values(error.response.data)
         )
         throw error
