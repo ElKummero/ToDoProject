@@ -37,7 +37,7 @@
               <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
                 <q-date
                   v-model="tache.dateFin"
-                  mask="D.M.YYYY"
+                  mask="YYYY-MM-DD"
                   @input="() => $refs.qDateProxy.hide()"
                 />
               </q-popup-proxy>
@@ -91,6 +91,14 @@
 
 <script>
 import { mapActions } from 'vuex'
+// importation de l'outils date de Quasar
+import { date } from 'quasar'
+// Création d'une date avec le constructeur JavaScript Date()
+let nouvelleDate = new Date('2020-01-31')
+// Formate la date au format DD.MM.YY avec l'outils date de Quasae
+nouvelleDate = date.formatDate(nouvelleDate, 'DD.MM.YY')
+
+console.log(nouvelleDate) // '31.01.20'
 
 export default {
   name: 'FormTache',
@@ -109,7 +117,7 @@ export default {
         nom: '',
         dateFin: '',
         heureFin: '',
-        terminee: 0
+        terminee: false
       },
       heureTemp: ''
     }

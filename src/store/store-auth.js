@@ -107,7 +107,9 @@ Fonctionne comme les propriétés calculées
 Sert à calculer, trier, filtrer ou formater les donneés
  */
 const getters = {
-
+  user: function (state) {
+    return state.user
+  }
 }
 
 /*
