@@ -74,7 +74,6 @@
         -->
       </q-list>
     </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -172,9 +171,4 @@ export default {
   /* Cache les éléments avec la classe CSS q-footer */
   .q-footer
     display: none
-
-/* Lien actif du menu latéral */
-.q-drawer
-  .q-router-link--exact-active
-    color: white !important
 </style>
